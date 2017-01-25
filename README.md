@@ -37,6 +37,13 @@ Output JSON schema to file
 ```
 xsdtojson [PATH TO XSD FILE] > [PATH TO JSON OUTPUT FILE]
 ```
+
+#### PYTHON
+```
+from xsdtojson import xsd_to_json_schema
+json_schema = xsd_to_json_schema([PATH TO XSD FILE])
+```
+
 ### TODO
 
 * Convert XSD data types to JSON Schema types.  See generateRS for possible mappings.

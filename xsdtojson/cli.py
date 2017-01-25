@@ -1,6 +1,6 @@
 import click
 from pygments import highlight, lexers, formatters
-from xsdtojson.lib import xsd_to_json_schema
+from xsdtojson import xsd_to_json_schema
 
 
 @click.command()
