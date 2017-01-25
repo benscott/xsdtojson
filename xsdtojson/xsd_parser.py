@@ -83,14 +83,18 @@ class XSDParser:
     @staticmethod
     def flatten_schema(schema):
         """
-        If  the top level properties dict consists of just one item, flatten
-        It down to that point
+        If the top level properties dict consists of just one item, and has
+        lots of child properties, flatten property dict
+        TODO: This is to keep the schema the same as other plugins - is it needed?
         :param schema:
         :return:
         """
         if len(schema['properties']) == 1:
-            # We only have one item, so set the schema to its value
-            schema = schema['properties'].popitem()[1]
+            first_property = next(iter(schema['properties']))
+            # If the sole top level item has child properties, then flatten
+            # If there's no child properties, do no flatten
+            if 'properties' in schema['properties'][first_property]:
+                schema = schema['properties'][first_property]
         return schema
 
     def json_schema(self):
