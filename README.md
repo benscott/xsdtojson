@@ -1,8 +1,8 @@
-# xsdtojson
+# XSD To JSON Schema
 
-### Convert XSD files to JSON Schema
+### Transforming XSD files into JSON Schema
 
-Python script that converts XSD files to JSON Schema.
+Python script that transforms XSD files into [JSON Schema](http://json-schema.org/).
 
 For example, transforming:
 ```
@@ -27,10 +27,19 @@ Into:
 ```
 ### USAGE
 
+#### CLI
 
+Output JSON schema to stdout.
+```
+xsdtojson [PATH TO XSD FILE] --pretty
+```
+Output JSON schema to file
+```
+xsdtojson [PATH TO XSD FILE] > [PATH TO JSON OUTPUT FILE]
+```
 ### TODO
 
-Not working with nested??
+### TESTS
 
 Can I run tests to build a JSON schema, validate a JSON-LD file against it, and then convert that back to RDF to validate against the original file?
 
