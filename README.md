@@ -23,3 +23,5 @@ https://groups.google.com/forum/#!topic/json-schema/d4XHU5jQKhI********
 https://brandur.org/elegant-apis
 
 https://github.com/interagent/prmd
+
+https://www.haykranen.nl/2015/07/08/perfect-cms/
