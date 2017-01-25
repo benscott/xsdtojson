@@ -1,20 +1,20 @@
-import os
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+Created by Ben Scott on '25/01/2017'.
+"""
 import simplejson as json
 from lxml import etree
 from collections import OrderedDict
 from distutils.util import strtobool
-from xsdtojson.lib import inflate_tag
 
 
 class XSDParser:
+
     type_extensions = {}
 
-    def __init__(self, xsd_file):
-        path = os.path.abspath(xsd_file)
-        # Check XSD file exists and raise error if not, rather than lxml error
-        if not os.path.exists(xsd_file):
-            raise IOError('XSD file %s does not exist' % xsd_file)
-        self.doc = etree.parse(path)
+    def __init__(self, xsd_file_path):
+        self.doc = etree.parse(xsd_file_path)
         self.root = self.doc.getroot()
         self.namespaces = self.root.nsmap
         self.build_type_extensions()
