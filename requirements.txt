@@ -12,4 +12,3 @@ Pygments==2.2.0
 PyXB==1.2.5
 simplejson==3.10.0
 Werkzeug==0.11.15
--e git+https://github.com/benscott/xsdtojson@14cc91bb24086e152388d884b2ee63d97136e26b#egg=xsdtojson-master
