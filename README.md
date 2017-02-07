@@ -51,6 +51,7 @@ json_schema = xsd_to_json_schema([PATH TO XSD FILE])
     * https://github.com/geraintluff/schema-org-gen
     * http://stackoverflow.com/questions/17768805/schema-org-ontology-as-json
     * https://gist.github.com/stain/7690362
+    * http://json-schema.org/latest/json-schema-core.html#rfc.section.5.4
 * Write tests. Ideally these will:
     * Build a JSON schema from XSD
     * Create & validate JSON-LD record

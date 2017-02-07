@@ -13,11 +13,34 @@ class XSDParser:
 
     type_extensions = {}
 
-    def __init__(self, xsd_file_path):
-        self.doc = etree.parse(xsd_file_path)
-        self.root = self.doc.getroot()
+    type_mappings = {
+
+    }
+
+    def __init__(self, xsd_src):
+
+        try:
+            # Try and read src as XML (will work for requests.content (string)
+            self.root = etree.XML(xsd_src)
+        except etree.XMLSyntaxError:
+            # Or parse the object (will work for files)
+            doc = etree.parse(xsd_src)
+            self.root = doc.getroot()
+
         self.namespaces = self.root.nsmap
         self.build_type_extensions()
+
+        # print(type(xsd_src))
+        # print('---')
+        # self.root = etree.XML(xsd_src)
+        # return
+        # f = open(xsd_file_path, 'r')
+        # print(f)
+        #
+        # self.doc = etree.parse(f)
+        # self.root = self.doc.getroot()
+        # self.namespaces = self.root.nsmap
+        # self.build_type_extensions()
 
     def build_type_extensions(self):
         """ Build a list of all type extensions which can be extended by the main class
@@ -60,7 +83,7 @@ class XSDParser:
                     schema['properties'][element_name] = self.type_extensions[element_type]
                 except KeyError:
                     schema['properties'][element_name] = {
-                        'type': element_type
+                        'type': self.xsd_to_json_schema_type(element_type)
                     }
                 if min_occurs > 0 or nillable:
                     schema.setdefault('required', []).append(element_name)
@@ -114,3 +137,9 @@ class XSDParser:
         # Set schema
         schema['$schema'] = 'http://json-schema.org/schema#'
         return json.dumps(schema, sort_keys=False, indent=4)
+
+    def xsd_to_json_schema_type(self, element_type):
+        try:
+            return self.type_mappings[element_type]
+        except KeyError:
+            return 'string'
