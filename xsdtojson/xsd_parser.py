@@ -30,18 +30,6 @@ class XSDParser:
         self.namespaces = self.root.nsmap
         self.build_type_extensions()
 
-        # print(type(xsd_src))
-        # print('---')
-        # self.root = etree.XML(xsd_src)
-        # return
-        # f = open(xsd_file_path, 'r')
-        # print(f)
-        #
-        # self.doc = etree.parse(f)
-        # self.root = self.doc.getroot()
-        # self.namespaces = self.root.nsmap
-        # self.build_type_extensions()
-
     def build_type_extensions(self):
         """ Build a list of all type extensions which can be extended by the main class
         For example - http://www.w3schools.com/xml/el_complextype.asp
