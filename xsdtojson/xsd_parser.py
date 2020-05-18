@@ -64,6 +64,10 @@ class XSDParser:
             # Create properties dict if it doesn't already exist
             schema.setdefault('properties', OrderedDict())
             # If this element has a type, it needs to be an item in the schema
+            # If no type, but element is not part of sequences - add default type of string
+            if not element_type and (element.getparent().xpath('local-name()') == 'complexType'):
+                element_type = 'string'
+            
             if element_type:
                 try:
                     schema['properties'][element_name] = self.type_extensions[element_type]
@@ -82,7 +86,13 @@ class XSDParser:
                 # Update schema pointer to use the nested element
                 # This allows us to build the tree
                 schema = schema['properties'][element_name]
-
+        else:
+            element_ref = element.attrib.get('ref')
+            if element_ref:
+                element_name = element_ref[element_ref.find(':')+1:]
+                schema.setdefault('properties', OrderedDict())
+                schema['properties'][element_name] = {'$ref':'#/components/schemas/'+element_name}
+            
         # Does this element have any element descendants?
         # If does, recursively call function
         if element.findall(".//xs:element", namespaces=self.namespaces):
