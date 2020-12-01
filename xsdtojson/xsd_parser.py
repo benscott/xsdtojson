@@ -116,7 +116,7 @@ class XSDParser:
                 schema = schema['properties'][first_property]
         return schema
 
-    def json_schema(self, code_mirror_format=False):
+    def json_schema(self, code_mirror_format):
         """
         Main entry point - convert the XSD file to
         :return:
