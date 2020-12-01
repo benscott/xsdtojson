@@ -3,4 +3,4 @@
 """
 Created by Ben Scott on '25/01/2017'.
 """
-from xsdtojson.lib import xsd_to_json_schema
+from .lib import xsd_to_json_schema

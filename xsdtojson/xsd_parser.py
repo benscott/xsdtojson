@@ -116,7 +116,7 @@ class XSDParser:
                 schema = schema['properties'][first_property]
         return schema
 
-    def json_schema(self):
+    def json_schema(self, code_mirror_format):
         """
         Main entry point - convert the XSD file to
         :return:
@@ -128,11 +128,33 @@ class XSDParser:
             self.parse_element_recurse(element, schema)
 
         # Flatten the schema - so if there's just one element at the root, this is removed
-        schema = self.flatten_schema(schema)
+        if code_mirror_format:
+            new_schema = self.format_codemirror(schema, topLevel=True)
+            for item in new_schema:
+                if isinstance(new_schema[item], set):
+                    new_schema[item] = list(new_schema[item])
+                if 'children' in new_schema[item] and isinstance(new_schema[item]['children'], set):
+                    new_schema[item]['children'] = list(new_schema[item]['children'])
+            schema = new_schema
+        else:
+            schema = self.flatten_schema(schema)
+
         # Set schema
         schema['schema'] = 'http://json-schema.org/schema#'
         schema['type'] = 'object'
         return json.dumps(schema, sort_keys=False, indent=4)
+
+    def format_codemirror(self, schema, tmp_schema=None, topLevel=False, parent=None):
+        items = schema['properties'] if 'properties' in schema else []
+        for item in items:
+            if topLevel:
+                tmp_schema = OrderedDict() if not tmp_schema else tmp_schema
+                tmp_schema.setdefault('!top', set([])).add(item)
+            if parent:
+                tmp_schema[parent]['children'].add(item)
+            tmp_schema.setdefault(item, OrderedDict()).setdefault('children', set())
+            self.format_codemirror(schema['properties'][item], tmp_schema=tmp_schema, parent=item)
+        return tmp_schema
 
     def xsd_to_json_schema_type(self, element_type):
         try:
