@@ -5,7 +5,7 @@ Flask-DotEnv==0.1.0
 itsdangerous==0.24
 Jinja2==2.9.4
 jsonschema==2.5.1
-lxml==3.7.2
+lxml==4.6.2
 MarkupSafe==0.23
 nose==1.3.7
 Pygments==2.2.0
